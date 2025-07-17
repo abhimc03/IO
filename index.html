@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek MC - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base styles for the body, using Inter font and a light background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Styling for section titles with a dynamic underline effect */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748; /* Darker text for titles */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%; /* Initial width of the underline */
+            height: 4px; /* Slightly thicker underline */
+            background-color: #4f46e5; /* Indigo 600 */
+            border-radius: 9999px; /* Fully rounded ends */
+            transition: width 0.3s ease-in-out; /* Smooth transition for width */
+        }
+        /* Extend underline width on hover (optional, for interactive titles) */
+        .section-title:hover::after {
+            width: 100%;
+        }
+
+        /* Card styling with enhanced shadows and hover effects */
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05); /* Stronger shadow */
+            padding: 2rem; /* Increased padding */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions for hover */
+        }
+        .card:hover {
+            transform: translateY(-5px); /* Lift card slightly on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08); /* More pronounced shadow on hover */
+        }
+
+        /* Primary button styling with hover effects */
+        .btn-primary {
+            background-color: #4f46e5; /* Indigo 600 */
+            color: white;
+            padding: 0.75rem 1.75rem; /* Slightly more padding */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+            font-weight: 600; /* Semi-bold text */
+            display: inline-flex; /* For icon alignment */
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Indigo 700 */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Skill badge styling with rounded corners and hover effects */
+        .skill-badge {
+            background-color: #e0e7ff; /* Indigo 100 */
+            color: #4f46e5; /* Indigo 600 */
+            padding: 0.4rem 1rem; /* Slightly more padding */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-size: 0.9rem; /* Slightly larger text */
+            font-weight: 500; /* font-medium */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+        }
+        .skill-badge:hover {
+            background-color: #c7d2fe; /* Indigo 200 */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Timeline item styling for education/experience sections */
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem; /* More space for the dot */
+            margin-bottom: 2.5rem; /* More space between items */
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35rem; /* Adjust vertical alignment of the dot */
+            width: 0.9rem; /* Larger dot */
+            height: 0.9rem; /* Larger dot */
+            background-color: #4f46e5; /* Dot color */
+            border-radius: 50%; /* Circular dot */
+            border: 3px solid #c7d2fe; /* Thicker border around the dot */
+            z-index: 10; /* Ensure dot is above the line */
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.45rem; /* Align with center of dot */
+            top: 1.5rem; /* Start line below dot */
+            bottom: -0.5rem; /* Extend line below the current item */
+            width: 2px; /* Thickness of the timeline line */
+            background-color: #c7d2fe; /* Line color */
+        }
+        .timeline-item:last-child::after {
+            display: none; /* Hide line for the last item */
+        }
+
+        /* Navbar link specific styles with hover underline */
+        .navbar-link {
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+        .navbar-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0; /* Initial width of the underline */
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease; /* Smooth transition for underline width */
+        }
+        .navbar-link:hover::after {
+            width: 100%; /* Expand underline on hover */
+        }
+
+        /* Keyframe for fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-gray-800 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <a href="#about" class="text-xl font-bold navbar-link">Abhishek MC</a>
+            <!-- Desktop Navigation Links -->
+            <div class="space-x-6 hidden md:flex">
+                <a href="#about" class="navbar-link">About</a>
+                <a href="#education" class="navbar-link">Education</a>
+                <a href="#skills" class="navbar-link">Skills</a>
+                <a href="#research" class="navbar-link">Research</a>
+                <a href="#contact" class="navbar-link">Contact</a>
+            </div>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu (Hidden by default, toggled by JS) -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 text-center">
+            <a href="#about" class="block py-2 px-4 hover:bg-gray-700 rounded-md">About</a>
+            <a href="#education" class="block py-2 px-4 hover:bg-gray-700 rounded-md">Education</a>
+            <a href="#skills" class="block py-2 px-4 hover:bg-gray-700 rounded-md">Skills</a>
+            <a href="#research" class="block py-2 px-4 hover:bg-gray-700 rounded-md">Research</a>
+            <a href="#contact" class="block py-2 px-4 hover:bg-gray-700 rounded-md">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-20 px-4 sm:px-6 lg:px-8 shadow-lg rounded-b-xl text-center">
+        <div class="max-w-4xl mx-auto animate-fade-in">
+            <!-- Profile Image with border and hover effect -->
+            <img src="https://placehold.co/150x150/a78bfa/ffffff?text=AM" alt="Abhishek MC Profile" class="rounded-full border-6 border-white mx-auto mb-6 shadow-xl transform transition-transform duration-500 hover:scale-105">
+            <h1 class="text-5xl sm:text-6xl font-extrabold mb-3 tracking-tight">Abhishek MC</h1>
+            <p class="text-2xl sm:text-3xl font-light mb-6 opacity-90">Aspiring Data Scientist | AI, ML & Software Engineer</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <!-- Email Button -->
+                <a href="mailto:abhishekmc2003@gmail.co" class="btn-primary flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span>Email Me</span>
+                </a>
+                <!-- LinkedIn Button -->
+                <a href="https://linkedin.com/in/Abhishek M C" target="_blank" class="btn-primary flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8 space-y-12">
+
+        <!-- About Me Section -->
+        <section id="about" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-6">About Me</h2>
+            <p class="text-lg leading-relaxed text-gray-700">
+                I'm an aspiring Data Scientist passionate about using data to uncover insights and solve real-world problems.
+                My interests extend into AI, Machine Learning, and Software Engineering, where I aim to build smart, efficient,
+                and scalable solutions. I'm constantly learning new tools and technologies to grow as a versatile and impactful tech professional.
+            </p>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-6">Education</h2>
+            <div class="space-y-6">
+                <div class="timeline-item">
+                    <h3 class="text-xl font-semibold text-gray-800">Master of Computer Application (2nd Sem)</h3>
+                    <p class="text-gray-600">MS Ramaiah Institute Of Technology, Bangalore</p>
+                    <p class="text-sm text-gray-500">2024 | CGPA: 8.11</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-semibold text-gray-800">Bachelors of Computer Application</h3>
+                    <p class="text-gray-600">University of Mysore</p>
+                    <p class="text-sm text-gray-500">2024 | CGPA: 7.5</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-semibold text-gray-800">PUC, Department of Pre-university Education</h3>
+                    <p class="text-gray-600">Brilliant P U College, Hassan</p>
+                    <p class="text-sm text-gray-500">2021 | Percentage: 84%</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-semibold text-gray-800">SSLC, Karnataka Secondary Education Examination board</h3>
+                    <p class="text-gray-600">Anugraha High School, Hassan</p>
+                    <p class="text-sm text-gray-500">2019 | Percentage: 83%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skills & Interests Section -->
+        <section id="skills" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-6">Technical Skills & Interests</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Languages</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">C++</span>
+                        <span class="skill-badge">Java</span>
+                        <span class="skill-badge">Python</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Developer Tools</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">Github</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Cloud/Databases</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">SQL</span>
+                        <span class="skill-badge">MongoDB</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Soft Skills</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">Leadership</span>
+                        <span class="skill-badge">Networking</span>
+                        <span class="skill-badge">Documentation</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Technical Stacks</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">Front-end Development</span>
+                        <span class="skill-badge">Back-end Development</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Areas of Interest</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge">Web Technologies</span>
+                        <span class="skill-badge">Generative AI</span>
+                        <span class="skill-badge">Cloud</span>
+                        <span class="skill-badge">Machine Learning</span>
+                        <span class="skill-badge">Deep Learning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Articles Section -->
+        <section id="research" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-6">Research Articles</h2>
+            <div class="space-y-4">
+                <div class="border-b pb-4 last:border-b-0">
+                    <h3 class="text-xl font-semibold text-gray-800">Hybrid Intelligence for Decentralized Coordination in Swarm Robotics</h3>
+                    <p class="text-gray-600">Abhishek M C, Ajitha S</p>
+                    <p class="text-sm text-gray-500">Presented at the 2nd National Level Student Research Conference (SRC-2025), held at Dayananda Sagar College of Arts, Science & Commerce, 14th March 2025.</p>
+                    <a href="#" class="text-indigo-600 hover:underline text-sm mt-2 inline-block">View Article (Link Placeholder)</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="card text-center">
+            <h2 class="text-3xl font-semibold section-title mb-6 mx-auto">Get In Touch</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Feel free to reach out to me for collaborations, opportunities, or just a chat!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="mailto:abhishekmc2003@gmail.co" class="btn-primary flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span>abhishekmc2003@gmail.co</span>
+                </a>
+                <a href="tel:+916366578849" class="btn-primary flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.774a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                    <span>+91 6366578849</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 sm:px-6 lg:px-8 text-center rounded-t-xl">
+        <p>&copy; 2025 Abhishek MC. All rights reserved.</p>
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="https://github.com/Abhitech003" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.47.087.68-.207.68-.468 0-.23-.008-.857-.013-1.678-2.775.604-3.363-1.379-3.363-1.379-.454-1.156-1.11-1.464-1.11-1.464-.908-.618.069-.606.069-.606 1.003.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.931 0-1.09.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.099 2.65.64.7 1.028 1.598 1.028 2.688 0 3.829-2.339 4.673-4.566 4.92.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .263.207.567.688.467C21.134 20.21 24 16.455 24 12.017 24 6.484 19.522 2 14 2h-2z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            <!-- Add more social media icons if available, e.g., Twitter, Instagram -->
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
